@@ -19,17 +19,20 @@ The main goals of this project are:
 - Support for any fungible token that implements the `ft-trait`
 - Automatic creation of new rollups when the current one is full
 - Rollup submission with a fee to incentivize processors
+- Batch processing of multiple rollups for increased efficiency
+- Event system for tracking important contract actions
 - Read-only functions to query rollup status and details
 
 ## Smart Contract Structure
 
 The main contract file is `rollups.clar`, which contains the following key components:
 
-- Constants for rollup size and fees
+- Constants for rollup size, batch size, and fees
 - Data variables to track current rollup state
 - Maps to store rollup data
 - Functions to add transactions to rollups
-- Functions to submit completed rollups
+- Functions to submit individual rollups and batches of rollups
+- Event system for logging important actions
 - Read-only functions to query rollup details
 
 ## How to Use
@@ -58,10 +61,16 @@ To add a transaction to a rollup:
 (contract-call? .rollups add-transaction-to-rollup token-contract recipient amount)
 ```
 
-To submit a rollup:
+To submit a single rollup:
 
 ```clarity
 (contract-call? .rollups submit-rollup token-contract rollup-id)
+```
+
+To submit a batch of rollups:
+
+```clarity
+(contract-call? .rollups submit-rollups-batch token-contract (list rollup-id-1 rollup-id-2 rollup-id-3))
 ```
 
 To get rollup details:
@@ -72,8 +81,8 @@ To get rollup details:
 
 ## Development Roadmap
 
-1. Implement batch processing of rollups
-2. Add events for important actions (e.g., rollup creation, submission)
+1. ✅ Implement batch processing of rollups
+2. ✅ Add events for important actions (e.g., rollup creation, submission)
 3. Implement additional security measures and access control
 4. Optimize gas usage and storage efficiency
 5. Add more sophisticated error handling and recovery mechanisms
@@ -84,7 +93,7 @@ Any contributions to this project is welcome. Please fork the repository, make y
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact
 
